@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  product: 
+  user: 
+  purchase_date: 2024-01-25 23:32:20
+
+two:
+  product: 
+  user: 
+  purchase_date: 2024-01-25 23:32:20

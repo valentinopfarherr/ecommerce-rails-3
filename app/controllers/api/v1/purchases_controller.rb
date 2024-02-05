@@ -1,2 +1,6 @@
-class Api::V1::PurchasesController < ApplicationController
+module Api
+  module V1
+    class PurchasesController < ApplicationController
+    end
+  end
 end

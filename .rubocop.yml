@@ -1,0 +1,23 @@
+AllCops:
+  TargetRubyVe# rubocop.yml
+
+# AllCops settings apply globally
+AllCops:
+  TargetRubyVersion: 1.9
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+    - 'db/seeds.rb'
+
+Metrics/LineLength:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+Performance/RedundantMerge:
+  Enabled: true
+Performance/UnfreezeString:
+  Enabled: true
+Performance/Casecmp:
+  Enabled: true

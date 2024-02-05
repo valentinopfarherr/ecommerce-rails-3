@@ -1,2 +1,6 @@
-module Api::V1::PurchasesHelper
+module Api
+  module V1
+    class PurchasesHelper
+    end
+  end
 end

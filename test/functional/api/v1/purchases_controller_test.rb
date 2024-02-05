@@ -1,7 +1,8 @@
 require 'test_helper'
 
-class Api::V1::PurchasesControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+module Api
+  module V1
+    class PurchasesControllerTest < ApplicationController::TestCase
+    end
+  end
 end

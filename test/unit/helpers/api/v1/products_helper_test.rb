@@ -1,4 +1,8 @@
 require 'test_helper'
 
-class Api::V1::ProductsHelperTest < ActionView::TestCase
+module Api
+  module V1
+    class ProductsHelperTest < ActionView::TestCase
+    end
+  end
 end

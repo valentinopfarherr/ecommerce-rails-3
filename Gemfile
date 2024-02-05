@@ -6,6 +6,8 @@ gem 'pg'
 
 gem 'execjs', '2.7.0'
 
+gem 'paper_trail'
+
 gem 'devise'
 gem 'jwt'
 

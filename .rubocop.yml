@@ -15,6 +15,9 @@ Metrics/LineLength:
 Rails:
   Enabled: true
 
+Rails/ActionFilter:
+  Enabled: false
+
 Performance/RedundantMerge:
   Enabled: true
 Performance/UnfreezeString:

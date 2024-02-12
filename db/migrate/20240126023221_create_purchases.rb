@@ -2,13 +2,11 @@
 class CreatePurchases < ActiveRecord::Migration
   def change
     create_table :purchases do |t|
-      t.references :product
-      t.references :buyer
+      t.references :product, index: true
+      t.references :buyer, index: true
       t.datetime :purchase_date
 
       t.timestamps
     end
-    add_index :purchases, :product_id
-    add_index :purchases, :buyer_id
   end
 end

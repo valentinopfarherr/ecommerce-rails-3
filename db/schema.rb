@@ -13,21 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20240205023936) do
 
-  create_table "admins", :force => true do |t|
-    t.string   "full_name"
-    t.integer  "admin_level"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "buyers", :force => true do |t|
-    t.string   "full_name"
-    t.string   "address"
-    t.string   "phone_number"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
   create_table "categories", :force => true do |t|
     t.string   "name"
     t.integer  "creator_id"
@@ -44,17 +29,12 @@ ActiveRecord::Schema.define(:version => 20240205023936) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "images", ["product_id"], :name => "index_images_on_product_id"
-
   create_table "product_categories", :force => true do |t|
     t.integer  "product_id"
     t.integer  "category_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
-
-  add_index "product_categories", ["category_id"], :name => "index_product_categories_on_category_id"
-  add_index "product_categories", ["product_id"], :name => "index_product_categories_on_product_id"
 
   create_table "products", :force => true do |t|
     t.string   "name"
@@ -75,17 +55,13 @@ ActiveRecord::Schema.define(:version => 20240205023936) do
     t.datetime "updated_at",    :null => false
   end
 
-  add_index "purchases", ["buyer_id"], :name => "index_purchases_on_buyer_id"
-  add_index "purchases", ["product_id"], :name => "index_purchases_on_product_id"
-
   create_table "users", :force => true do |t|
-    t.string   "username",      :null => false
-    t.string   "email",         :null => false
-    t.string   "password",      :null => false
-    t.integer  "userable_id"
-    t.string   "userable_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "username",                        :null => false
+    t.string   "email",                           :null => false
+    t.string   "password"
+    t.string   "role",       :default => "buyer", :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   create_table "versions", :force => true do |t|

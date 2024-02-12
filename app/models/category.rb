@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
   has_many :product_categories
   has_many :products, through: :product_categories
 
-  attr_accessible :name, :creator_id
+  validates :name, uniqueness: true
 
   has_paper_trail
 end

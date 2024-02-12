@@ -1,13 +1,17 @@
 # User class represents a user in the system.
 class User < ActiveRecord::Base
-  belongs_to :userable, polymorphic: true
-
-  has_many :purchases, foreign_key: 'customer_id'
-  has_many :created_products, class_name: 'Product', foreign_key: 'creator_id'
-  has_many :created_categories, class_name: 'Category', foreign_key: 'creator_id'
-  attr_accessible :username, :email, :password, :password_confirmation
+  before_save :encrypt_password
 
   validates :username, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true
-  validates :password, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  validates :role, presence: true, inclusion: { in: %w(admin buyer) }
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
+
+  def authenticate(password)
+    Digest::SHA256.hexdigest(user.password) == password
+  end
+
+  def encrypt_password
+    self.password = Digest::SHA256.hexdigest(password)
+  end
 end

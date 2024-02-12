@@ -17,8 +17,14 @@ module Ecommerce
 
     config.assets.version = '1.0'
 
+    # false because strong params are used
+    config.active_record.whitelist_attributes = false
+
+    config.time_zone = 'America/Argentina/Buenos_Aires'
+
     config.generators do |g|
       g.test_framework :rspec
     end
+    config.api_only = true
   end
 end

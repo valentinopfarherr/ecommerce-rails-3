@@ -1,33 +1,79 @@
-# create users
-admin_user = Admin.create(username: 'admin', email: 'admin@example.com', password: 'admin_password')
-customer_user1 = Buyer.create(username: 'customer1', email: 'customer1@example.com', password: 'customer_password')
-customer_user2 = Buyer.create(username: 'customer2', email: 'customer2@example.com', password: 'customer_password')
+# create the first admin if no admins exist
+unless Admin.any?
+  admin = Admin.new(
+    username: 'admin',
+    email: 'admin@example.com',
+    password: 'password',
+    role: 'admin'
+  )
+  if admin.save
+    puts 'first admin created successfully!'
+  else
+    puts "error creating admin: #{admin.errors.full_messages.join(', ')}"
+  end
+else
+  puts 'admin already exists!'
+end
+
+# create admins
+5.times do
+  Admin.create(
+    username: Faker::Lorem.word,
+    email: Faker::Internet.email,
+    password: 'password',
+    role: 'admin'
+  )
+end
+
+# create buyers
+10.times do
+  Buyer.create(
+    username: Faker::Lorem.word,
+    email: Faker::Internet.email,
+    password: 'password',
+    role: 'buyer'
+  )
+end
 
 # create categories
-electronics_category = Category.create(name: 'Electronica', creator_id: admin_user.id)
-clothing_category = Category.create(name: 'Ropa', creator_id: admin_user.id)
+categories = ['Electronicos', 'Ropa', 'Hogar', 'Deportes', 'Juguetes']
+
+categories.each do |category_name|
+  unless Category.exists?(name: category_name)
+    Category.create(
+      name: category_name,
+      creator_id: Admin.pluck(:id).sample
+    )
+  end
+end
 
 # create products
-phone_product = Product.create(name: 'Iphone', price: 500, creator_id: admin_user.id)
-laptop_product = Product.create(name: 'Laptop', price: 1200, creator_id: admin_user.id)
-shirt_product = Product.create(name: 'Camiseta', price: 20, creator_id: admin_user.id)
-pants_product = Product.create(name: 'Pantalones', price: 30, creator_id: admin_user.id)
+20.times do
+  product = Product.create!(
+    name: Faker::Commerce.product_name,
+    description: Faker::Lorem.sentence,
+    price: Faker::Commerce.price,
+    creator_id: Admin.pluck(:id).sample
+  )
 
-# associations
-phone_product.categories << electronics_category
-laptop_product.categories << electronics_category
-shirt_product.categories << clothing_category
-pants_product.categories << clothing_category
+  # create some images for each product
+  3.times do
+    product.images.create(
+      url: "https://source.unsplash.com/featured/?product"
+    )
+  end
 
-# create images
-phone_image1 = Image.create(url: 'phone_image1.jpg', product_id: phone_product.id)
-phone_image2 = Image.create(url: 'phone_image2.jpg', product_id: phone_product.id)
-laptop_image = Image.create(url: 'laptop_image.jpg', product_id: laptop_product.id)
-shirt_image = Image.create(url: 'shirt_image.jpg', product_id: shirt_product.id)
-pants_image = Image.create(url: 'pants_image.jpg', product_id: pants_product.id)
+  # assign random categories to products
+  rand(1..3).times do
+    product.categories << Category.all.sample
+  end
+end
 
-# create purchases
-purchase1 = Purchase.create(product_id: phone_product.id, customer_id: customer_user1.id, quantity: 1)
-purchase2 = Purchase.create(product_id: shirt_product.id, customer_id: customer_user2.id, quantity: 2)
-purchase3 = Purchase.create(product_id: laptop_product.id, customer_id: customer_user1.id, quantity: 1)
-purchase4 = Purchase.create(product_id: pants_product.id, customer_id: customer_user2.id, quantity: 3)
+# create some purchases
+50.times do
+  Purchase.create(
+    product: Product.all.sample,
+    buyer: Buyer.all.sample,
+    purchase_date: Faker::Time.backward(365)
+  )
+end

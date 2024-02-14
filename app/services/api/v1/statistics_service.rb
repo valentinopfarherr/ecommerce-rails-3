@@ -73,16 +73,32 @@ module Api
 
       def self.purchase_list_by_parameters(options = {})
         conditions = []
+        parameters = {}
 
-        conditions << "pu.purchase_date >= #{options[:start_date]}" if options[:start_date].present?
+        if options[:start_date].present?
+          conditions << 'pu.purchase_date >= :start_date'
+          parameters[:start_date] = options[:start_date]
+        end
 
-        conditions << "pu.purchase_date <= #{options[:end_date]}" if options[:end_date].present?
+        if options[:end_date].present?
+          conditions << 'pu.purchase_date <= :end_date'
+          parameters[:end_date] = options[:end_date]
+        end
 
-        conditions << "pu.product_id IN (SELECT product_id FROM product_categories WHERE category_id = #{options[:category_id]})" if options[:category_id].present?
+        if options[:category_id].present?
+          conditions << 'pu.product_id IN (SELECT product_id FROM product_categories WHERE category_id = :category_id)'
+          parameters[:category_id] = options[:category_id]
+        end
 
-        conditions << "pu.customer_id = #{options[:buyer_id]}" if options[:buyer_id].present?
+        if options[:buyer_id].present?
+          conditions << 'pu.customer_id = :buyer_id'
+          parameters[:buyer_id] = options[:buyer_id]
+        end
 
-        conditions << "pu.customer_id = #{options[:admin_id]}" if options[:admin_id].present?
+        if options[:admin_id].present?
+          conditions << 'pu.customer_id = :admin_id'
+          parameters[:admin_id] = options[:admin_id]
+        end
 
         where_clause = conditions.empty? ? '' : "WHERE #{conditions.join(' AND ')}"
 
@@ -92,7 +108,7 @@ module Api
           #{where_clause}
         SQL
 
-        results = ActiveRecord::Base.connection.execute(query)
+        results = ActiveRecord::Base.connection.exec_query(query, 'SQL', parameters)
 
         purchases_by_parameters = []
 

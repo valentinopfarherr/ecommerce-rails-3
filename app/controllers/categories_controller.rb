@@ -19,8 +19,6 @@ class CategoriesController < ApplicationController
     @category = Category.new(params[:category])
     @category.creator_id = @current_user.id
 
-    category_info = @category.attributes 
-
     if @category.save
       render json: @category, status: :created, location: @category
     else

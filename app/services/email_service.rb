@@ -8,4 +8,10 @@ class EmailService
 
     mail.deliver
   end
+
+  def self.send_daily_purchase_report_email(purchases_summary, admins)
+    mail = ReportMailer.report_notification('Daily purchasing report', admins.pluck(:email), purchases_summary)
+
+    mail.deliver
+  end
 end

@@ -39,7 +39,7 @@ module Api
 
       def only_one_id_present?(buyer_id, admin_id)
         (buyer_id.present? && admin_id.blank?) || (admin_id.present? && buyer_id.blank?) || (buyer_id.blank? && admin_id.blank?)
-      end      
+      end
 
       def admin_user?(admin_id)
         return true unless admin_id.present?

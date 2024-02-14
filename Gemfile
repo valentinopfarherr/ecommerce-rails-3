@@ -5,7 +5,7 @@ gem 'pg'
 gem 'execjs', '2.7.0'
 gem 'paper_trail'
 gem 'jwt'
-gem 'sidekiq', '~> 2.17'
+gem 'sidekiq', '~> 1.0'
 gem 'kaminari'
 gem 'devise'
 

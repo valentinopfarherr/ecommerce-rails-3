@@ -1,7 +1,7 @@
 # Product class represents a product in the system.
 class Product < ActiveRecord::Base
   has_paper_trail
-  
+
   attr_accessible :name, :price, :description, :images_attributes, :product_categories_attributes
 
   belongs_to :creator, class_name: 'Admin'
@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
     self.class.transaction do
       reload
       unless first_purchase_email_sent?
-        admin_creator = self.creator 
+        admin_creator = creator
         cc_admins = User.where("role = 'admin' AND id != ?", creator.id)
         self.class.where(id: id).update_all(first_purchase_email_sent: true)
         EmailService.send_admin_first_purchase_email(self, admin_creator, cc_admins)

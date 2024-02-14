@@ -1,7 +1,7 @@
 # Category class represents a category in the system.
 class Category < ActiveRecord::Base
   has_paper_trail
-  
+
   attr_accessible :name
 
   belongs_to :creator, class_name: 'Admin'

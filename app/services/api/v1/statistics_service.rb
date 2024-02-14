@@ -71,7 +71,6 @@ module Api
         top_products_by_category
       end
 
-      # Due to time issues I could not use optimized sql because I could not use secure params correctly
       def self.purchase_list_by_parameters(options = {})
         purchases = Purchase.scoped
 

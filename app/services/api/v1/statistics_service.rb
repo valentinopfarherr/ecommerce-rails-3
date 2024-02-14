@@ -71,91 +71,81 @@ module Api
         top_products_by_category
       end
 
+      # Due to time issues I could not use optimized sql because I could not use secure params correctly
       def self.purchase_list_by_parameters(options = {})
-        conditions = []
-        parameters = {}
+        purchases = Purchase.scoped
 
-        if options[:start_date].present?
-          conditions << 'pu.purchase_date >= :start_date'
-          parameters[:start_date] = options[:start_date]
-        end
+        purchases = purchases.where('purchase_date >= ?', options[:start_date]) if options[:start_date].present?
+        purchases = purchases.where('purchase_date <= ?', options[:end_date]) if options[:end_date].present?
+        purchases = purchases.joins(product: :product_categories).where('product_categories.category_id = ?', options[:category_id]) if options[:category_id].present?
+        purchases = purchases.where(customer_id: options[:buyer_id]) if options[:buyer_id].present?
+        purchases = purchases.where(customer_id: options[:admin_id]) if options[:admin_id].present?
 
-        if options[:end_date].present?
-          conditions << 'pu.purchase_date <= :end_date'
-          parameters[:end_date] = options[:end_date]
-        end
-
-        if options[:category_id].present?
-          conditions << 'pu.product_id IN (SELECT product_id FROM product_categories WHERE category_id = :category_id)'
-          parameters[:category_id] = options[:category_id]
-        end
-
-        if options[:buyer_id].present?
-          conditions << 'pu.customer_id = :buyer_id'
-          parameters[:buyer_id] = options[:buyer_id]
-        end
-
-        if options[:admin_id].present?
-          conditions << 'pu.customer_id = :admin_id'
-          parameters[:admin_id] = options[:admin_id]
-        end
-
-        where_clause = conditions.empty? ? '' : "WHERE #{conditions.join(' AND ')}"
-
-        query = <<-SQL
-          SELECT pu.id AS purchase_id, pu.product_id, pu.customer_id, pu.purchase_date, pu.quantity
-          FROM purchases pu
-          #{where_clause}
-        SQL
-
-        results = ActiveRecord::Base.connection.exec_query(query, 'SQL', parameters)
-
-        purchases_by_parameters = []
-
-        results.each do |row|
-          purchases_by_parameters << {
-            purchase_id: row['purchase_id'],
-            product_id: row['product_id'],
-            customer_id: row['customer_id'],
-            purchase_date: row['purchase_date'],
-            quantity: row['quantity']
+        purchases.map do |purchase|
+          {
+            purchase_id: purchase.id,
+            product_id: purchase.product_id,
+            customer_id: purchase.customer_id,
+            purchase_date: purchase.purchase_date,
+            quantity: purchase.quantity
           }
         end
-
-        purchases_by_parameters
       end
 
       def self.purchases_by_granularity(granularity, options = {})
+        purchases = Purchase.scoped
+
+        purchases = purchases.where('purchase_date >= ?', options[:start_date]) if options[:start_date].present?
+        purchases = purchases.where('purchase_date <= ?', options[:end_date]) if options[:end_date].present?
+        purchases = purchases.joins(product: :product_categories).where('product_categories.category_id = ?', options[:category_id]) if options[:category_id].present?
+        purchases = purchases.where(customer_id: options[:buyer_id]) if options[:buyer_id].present?
+        purchases = purchases.where(customer_id: options[:admin_id]) if options[:admin_id].present?
+
+        granularity = granularity.to_sym if granularity.present?
+
         case granularity
-        when 'hour'
-          time_format = '%Y-%m-%d %H:00:00'
-        when 'day', 'week'
-          time_format = '%Y-%m-%d'
-        when 'year'
-          time_format = '%Y'
+        when :hour
+          result = purchases.group("DATE_TRUNC('hour', purchase_date)").count
+          format_result_by_hour(result)
+        when :day
+          result = purchases.group("DATE_TRUNC('day', purchase_date)").count
+          format_result_by_day(result)
+        when :week
+          result = purchases.group("DATE_TRUNC('week', purchase_date)").count
+          format_result_by_week(result)
+        when :year
+          result = purchases.group("DATE_TRUNC('year', purchase_date)").count
+          format_result_by_year(result)
         else
-          raise ArgumentError, 'Invalid granularity parameter'
+          result = purchases.group("DATE_TRUNC('day', purchase_date)").count # Por defecto, agrupar por día
+          format_result_by_day(result)
         end
+      end
 
-        query = <<-SQL
-          SELECT DATE_FORMAT(purchase_date, :time_format) AS time_period, SUM(quantity) AS total_quantity
-          FROM purchases
-          WHERE purchase_date BETWEEN :start_date AND :end_date
-            AND (:category_id IS NULL OR product_id IN (SELECT product_id FROM product_categories WHERE category_id = :category_id))
-            AND (:buyer_id IS NULL OR customer_id = :buyer_id)
-            AND (:admin_id IS NULL OR customer_id = :admin_id)
-          GROUP BY time_period
-        SQL
+      private
 
-        results = ActiveRecord::Base.connection.execute(query, options)
+      def self.format_result_by_hour(result)
+        formatted_result = {}
+        result.each { |date, count| formatted_result[Time.parse(date).strftime('%Y-%m-%d %H:%M')] = count }
+        formatted_result
+      end
 
-        purchases_by_granularity = {}
+      def self.format_result_by_day(result)
+        formatted_result = {}
+        result.each { |date, count| formatted_result[Time.parse(date).strftime('%Y-%m-%d')] = count }
+        formatted_result
+      end
 
-        results.each do |row|
-          purchases_by_granularity[row['time_period']] = row['total_quantity']
-        end
+      def self.format_result_by_week(result)
+        formatted_result = {}
+        result.each { |date, count| formatted_result[Time.parse(date).strftime('%Y-%m-%d')] = count }
+        formatted_result
+      end
 
-        purchases_by_granularity
+      def self.format_result_by_year(result)
+        formatted_result = {}
+        result.each { |date, count| formatted_result[Time.parse(date).strftime('%Y')] = count }
+        formatted_result
       end
     end
   end

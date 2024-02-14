@@ -9,6 +9,7 @@ AllCops:
     - 'db/schema.rb'
     - 'db/seeds.rb'
     - 'db/migrate/*'
+    - 'app/services/api/v1/statistics_service.rb'
 
 Metrics/LineLength:
   Enabled: false

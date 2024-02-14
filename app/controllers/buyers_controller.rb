@@ -1,41 +1,38 @@
 # BuyerController handles CRUD operations for buyers.
 class BuyersController < ApplicationController
-  # before_filter :authenticate_buyer!
+  before_filter :authenticate_user!, except: [:create]
+  before_filter -> { require_role('admin') }, except: [:create]
   before_filter :set_buyer, only: [:show, :update, :destroy]
 
   def index
-    @buyers = Buyer.where(role: 'buyer')
-    render json: @buyers
+    render json: paginate_collection(Buyer.where(role: 'buyer'))
   end
 
   # Shows a specific buyer.
   def show
-    if @buyer
-      render json: @buyer
-    else
-      render json: [], status: :ok
-    end
+    render json: @buyer, status: :ok
   end
 
   # Creates a new buyer.
 
   def create
-    @buyer = Buyer.new(buyer_params)
+    @buyer = Buyer.new(params[:buyer])
     @buyer.role = 'buyer'
 
     if @buyer.save
-      render json: @buyer, status: :created
+      token = encode_token(user_id: @buyer.id)
+      render json: { buyer: @buyer, token: token }, status: :created
     else
-      render json: { error: @buyer.errors.full_messages.join(', ') }, status: :unprocessable_entity
+      render_error_response(@buyer)
     end
   end
 
   # Updates an existing buyer.
   def update
-    if @buyer.update_attributes(buyer_params)
+    if @buyer.update_attributes(params[:buyer])
       render json: @buyer
     else
-      render json: { error: @buyer.errors.full_messages.join(', ') }, status: :unprocessable_entity
+      render_error_response(@buyer)
     end
   end
 
@@ -50,29 +47,9 @@ class BuyersController < ApplicationController
 
   private
 
-  def buyer_params
-    params.require(:buyer).permit(:username, :password, :email)
-  end
-
   # Sets the buyer for the actions that need it.
   def set_buyer
     @buyer = Buyer.find_by_id(params[:id])
-    unless @buyer && @buyer.role == 'buyer'
-      render json: { error: 'buyer not found' }, status: :not_found
-    end
-  end
-
-  def authenticate_buyer!
-    token = request.headers['Authorization'].to_s.split(' ').last
-    unless token && valid_token?(token)
-      render json: { error: 'unauthorized' }, status: :unauthorized
-    end
-  end
-
-  def valid_token?(token)
-    decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base)
-    decoded_token['buyer_id'].present? && Buyer.exists?(decoded_token['buyer_id'])
-  rescue JWT::DecodeError
-    false
+    render json: { error: 'buyer not found' }, status: :not_found unless @buyer.try(:role) == 'buyer'
   end
 end

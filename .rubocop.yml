@@ -8,6 +8,7 @@ AllCops:
     - 'vendor/**/*'
     - 'db/schema.rb'
     - 'db/seeds.rb'
+    - 'db/migrate/*'
 
 Metrics/LineLength:
   Enabled: false

@@ -1,18 +1,11 @@
 # create the first admin if no admins exist
 unless Admin.any?
-  admin = Admin.new(
+  admin = Admin.create(
     username: 'admin',
     email: 'admin@example.com',
     password: 'password',
     role: 'admin'
   )
-  if admin.save
-    puts 'first admin created successfully!'
-  else
-    puts "error creating admin: #{admin.errors.full_messages.join(', ')}"
-  end
-else
-  puts 'admin already exists!'
 end
 
 # create admins
@@ -38,14 +31,19 @@ end
 # create categories
 categories = ['Electronicos', 'Ropa', 'Hogar', 'Deportes', 'Juguetes']
 
+Category.seed_attributes
+admin_ids = User.where(role: 'admin').pluck(:id)
+
 categories.each do |category_name|
   unless Category.exists?(name: category_name)
     Category.create(
       name: category_name,
-      creator_id: Admin.pluck(:id).sample
+      creator_id: admin_ids.sample
     )
   end
 end
+
+Product.seed_attributes
 
 # create products
 20.times do
@@ -53,27 +51,46 @@ end
     name: Faker::Commerce.product_name,
     description: Faker::Lorem.sentence,
     price: Faker::Commerce.price,
-    creator_id: Admin.pluck(:id).sample
+    creator_id: admin_ids.sample
   )
 
-  # create some images for each product
-  3.times do
-    product.images.create(
-      url: "https://source.unsplash.com/featured/?product"
+  3.times do |i|
+    product.images.create!(
+      url: Faker::Internet.url
     )
   end
 
-  # assign random categories to products
+  assigned_categories = []
+
   rand(1..3).times do
-    product.categories << Category.all.sample
+    category = Category.all.sample
+    unless assigned_categories.include?(category)
+      product.categories << category
+      assigned_categories << category
+    end
   end
 end
 
 # create some purchases
+
+Purchase.seed_attributes
+buyer_ids = User.where(role: 'buyer').pluck(:id)
+
 50.times do
-  Purchase.create(
-    product: Product.all.sample,
-    buyer: Buyer.all.sample,
-    purchase_date: Faker::Time.backward(365)
+  Purchase.create!(
+    product_id: Product.pluck(:id).sample,
+    customer_id: buyer_ids.sample,
+    purchase_date: Faker::Time.backward(365),
+    quantity: rand(1..5)
+  )
+end
+
+# create some purchases for the admin
+5.times do
+  Purchase.create!(
+    product_id: Product.pluck(:id).sample,
+    customer_id: admin_ids.sample,
+    purchase_date: Faker::Time.backward(365),
+    quantity: rand(1..5)
   )
 end

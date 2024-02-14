@@ -6,9 +6,11 @@ gem 'execjs', '2.7.0'
 gem 'paper_trail'
 gem 'jwt'
 gem 'sidekiq', '~> 2.17'
-gem 'strong_parameters'
+gem 'kaminari'
+gem 'devise'
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'rspec-rails'
   gem 'faker', '1.6.6'
   gem 'factory_bot_rails'

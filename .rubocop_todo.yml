@@ -62,7 +62,6 @@ Style/Documentation:
 # Cop supports --auto-correct.
 Style/EmptyLines:
   Exclude:
-    - 'db/migrate/20240126023333_add_devise_to_users.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -89,7 +88,6 @@ Style/ExtraSpacing:
 Style/HashSyntax:
   Exclude:
     - 'config/application.rb'
-    - 'db/migrate/20240126023333_add_devise_to_users.rb'
     - 'db/schema.rb'
 
 # Offense count: 1
@@ -115,7 +113,6 @@ Style/SpaceAroundOperators:
 # Cop supports --auto-correct.
 Style/SpaceInsideBrackets:
   Exclude:
-    - 'config/initializers/devise.rb'
 
 # Offense count: 66
 # Cop supports --auto-correct.
@@ -125,8 +122,6 @@ Style/StringLiterals:
   Exclude:
     - 'config/application.rb'
     - 'config/environments/test.rb'
-    - 'config/initializers/devise.rb'
-    - 'db/migrate/20240126023333_add_devise_to_users.rb'
     - 'db/schema.rb'
     - 'spec/rails_helper.rb'
     - 'test/test_helper.rb'

@@ -11,8 +11,6 @@ class ApplicationController < ActionController::Base
     collection.page(params[:page]).per(per_page)
   end
 
-  private
-
   def render_error_response(model)
     render json: { error: model.errors.full_messages.join(', ') }, status: :unprocessable_entity
   end

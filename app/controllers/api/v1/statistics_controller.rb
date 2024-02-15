@@ -24,11 +24,11 @@ module Api
           render json: { error: 'invalid parameters' }, status: :unprocessable_entity
         end
       end
-      
+
       def purchases_by_granularity
         granularity = params[:granularity]
         options = extract_options
-      
+
         if valid_params?(options) && valid_granularity?(granularity)
           render json: StatisticsService.purchases_by_granularity(granularity, options), status: :ok
         else
@@ -41,11 +41,11 @@ module Api
       def valid_params?(options)
         only_one_id_present?(options[:buyer_id], options[:admin_id]) && admin_user?(options[:admin_id])
       end
-      
+
       def only_one_id_present?(buyer_id, admin_id)
         (buyer_id.present? && admin_id.blank?) || (admin_id.present? && buyer_id.blank?) || (buyer_id.blank? && admin_id.blank?)
       end
-      
+
       def admin_user?(admin_id)
         return true unless admin_id.present?
         user = User.find_by_id(admin_id)

@@ -1,4 +1,4 @@
-# AuthController handles authentication for admins & buyers.
+# AuthController handles authentication for admins & users.
 class AuthController < ApplicationController
   def login
     user = User.find_by_email(params[:email])

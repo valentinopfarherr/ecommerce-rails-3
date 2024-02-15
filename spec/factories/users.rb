@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :buyer, class: 'Buyer' do
+  factory :user do
     sequence(:username) { |n| "buyer#{n}" }
     email { Faker::Internet.email }
     password { 'password' }

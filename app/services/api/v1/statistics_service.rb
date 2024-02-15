@@ -77,7 +77,7 @@ module Api
         purchases = purchases.where('purchase_date >= ?', options[:start_date]) if options[:start_date].present?
         purchases = purchases.where('purchase_date <= ?', options[:end_date]) if options[:end_date].present?
         purchases = purchases.joins(product: :product_categories).where('product_categories.category_id = ?', options[:category_id]) if options[:category_id].present?
-        purchases = purchases.where(customer_id: options[:buyer_id]) if options[:buyer_id].present?
+        purchases = purchases.where(customer_id: options[:user_id]) if options[:user_id].present?
         purchases = purchases.where(customer_id: options[:admin_id]) if options[:admin_id].present?
 
         purchases.map do |purchase|
@@ -97,7 +97,7 @@ module Api
         purchases = purchases.where('purchase_date >= ?', options[:start_date]) if options[:start_date].present?
         purchases = purchases.where('purchase_date <= ?', options[:end_date]) if options[:end_date].present?
         purchases = purchases.joins(product: :product_categories).where('product_categories.category_id = ?', options[:category_id]) if options[:category_id].present?
-        purchases = purchases.where(customer_id: options[:buyer_id]) if options[:buyer_id].present?
+        purchases = purchases.where(customer_id: options[:user_id]) if options[:user_id].present?
         purchases = purchases.where(customer_id: options[:admin_id]) if options[:admin_id].present?
 
         granularity = granularity.to_sym if granularity.present?

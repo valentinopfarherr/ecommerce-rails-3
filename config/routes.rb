@@ -31,7 +31,7 @@ Ecommerce::Application.routes.draw do
   end
 
   resources :admins
-  resources :buyers
+  resources :users
   resources :purchases, except: [:update]
 
   match '*path', to: 'errors#not_found', via: :all

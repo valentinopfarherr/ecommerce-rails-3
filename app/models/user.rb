@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   attr_accessible :username, :role, :email, :password, :password_confirmation, :remember_me
 
+  has_many :purchases, foreign_key: 'customer_id'
+
   EMAIL_FORMAT_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :username, presence: true, uniqueness: true

@@ -20,7 +20,7 @@ end
 
 # create buyers
 10.times do
-  Buyer.create(
+  User.create(
     username: Faker::Lorem.word,
     email: Faker::Internet.email,
     password: 'password',

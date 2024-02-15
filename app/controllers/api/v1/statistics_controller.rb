@@ -39,11 +39,11 @@ module Api
       private
 
       def valid_params?(options)
-        only_one_id_present?(options[:buyer_id], options[:admin_id]) && admin_user?(options[:admin_id])
+        only_one_id_present?(options[:user_id], options[:admin_id]) && admin_user?(options[:admin_id])
       end
 
-      def only_one_id_present?(buyer_id, admin_id)
-        (buyer_id.present? && admin_id.blank?) || (admin_id.present? && buyer_id.blank?) || (buyer_id.blank? && admin_id.blank?)
+      def only_one_id_present?(user_id, admin_id)
+        (user_id.present? && admin_id.blank?) || (admin_id.present? && user_id.blank?) || (user_id.blank? && admin_id.blank?)
       end
 
       def admin_user?(admin_id)
@@ -57,7 +57,7 @@ module Api
           start_date: params[:start_date],
           end_date: params[:end_date],
           category_id: params[:category_id],
-          buyer_id: params[:buyer_id],
+          user_id: params[:user_id],
           admin_id: params[:admin_id]
         }
       end

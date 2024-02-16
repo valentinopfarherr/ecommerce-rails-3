@@ -8,7 +8,7 @@ RSpec.describe 'StatisticsController', type: :request do
       get '/api/v1/statistics/most_purchased_by_category', {}, auth_headers(admin_user)
 
       expect(response).to have_http_status(:ok)
-      
+
       json_response = JSON.parse(response.body)
 
       expect(json_response).to be_a(Hash)
@@ -33,7 +33,7 @@ RSpec.describe 'StatisticsController', type: :request do
       get '/api/v1/statistics/top_revenue_by_category', {}, auth_headers(admin_user)
 
       expect(response).to have_http_status(:ok)
-      
+
       json_response = JSON.parse(response.body)
 
       expect(json_response).to be_a(Hash)
@@ -59,14 +59,14 @@ RSpec.describe 'StatisticsController', type: :request do
     let(:admin_user) { create(:admin) }
 
     it 'returns the purchases' do
-      start_date = Date.today - rand(1..30).days
+      start_date = Time.zone.today - rand(1..30).days
       category_id = Category.pluck(:id).sample
       user_id = User.pluck(:id).sample
 
       get '/api/v1/statistics/purchases', { start_date: start_date, category_id: category_id, user_id: user_id }, auth_headers(admin_user)
 
       expect(response).to have_http_status(:ok)
-      
+
       json_response = JSON.parse(response.body)
 
       expect(json_response).to be_an(Array)
@@ -78,7 +78,7 @@ RSpec.describe 'StatisticsController', type: :request do
     end
 
     it 'returns an empty hash when no data is available' do
-      get '/api/v1/statistics/purchases', { category_id: 99999 }, auth_headers(admin_user)
+      get '/api/v1/statistics/purchases', { category_id: 99_999 }, auth_headers(admin_user)
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
       expect(json_response).to eq([])
@@ -96,7 +96,7 @@ RSpec.describe 'StatisticsController', type: :request do
 
     it 'returns the purchases by hour' do
       get '/api/v1/statistics/purchases_by_granularity', { granularity: 'hour' }, auth_headers(admin_user)
-  
+
       expect(response).to have_http_status(:ok)
 
       json_response = JSON.parse(response.body)
@@ -111,7 +111,7 @@ RSpec.describe 'StatisticsController', type: :request do
 
     it 'returns the purchases by granularity by day' do
       get '/api/v1/statistics/purchases_by_granularity', { granularity: 'day' }, auth_headers(admin_user)
-  
+
       expect(response).to have_http_status(:ok)
 
       json_response = JSON.parse(response.body)
@@ -126,7 +126,7 @@ RSpec.describe 'StatisticsController', type: :request do
 
     it 'returns the purchases by granularity by week' do
       get '/api/v1/statistics/purchases_by_granularity', { granularity: 'week' }, auth_headers(admin_user)
-  
+
       expect(response).to have_http_status(:ok)
 
       json_response = JSON.parse(response.body)
@@ -141,7 +141,7 @@ RSpec.describe 'StatisticsController', type: :request do
 
     it 'returns the purchases by granularity by year' do
       get '/api/v1/statistics/purchases_by_granularity', { granularity: 'year' }, auth_headers(admin_user)
-  
+
       expect(response).to have_http_status(:ok)
 
       json_response = JSON.parse(response.body)

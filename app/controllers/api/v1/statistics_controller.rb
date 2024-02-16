@@ -82,7 +82,7 @@ module Api
 
       def format_date(date_string)
         return nil if date_string.blank?
-      
+
         Date.parse(date_string).to_formatted_s(:db)
       end
     end

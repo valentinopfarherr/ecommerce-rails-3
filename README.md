@@ -1,10 +1,10 @@
-= README
+# README
 
 This repository contains the solution to the evaluation challenge for the Development and Technology team at Puntospoint. Below are the instructions for setting up the server and testing the implemented functionalities.
 
-== Usage Instructions
+## Usage Instructions
 
-=== Setting Up the Server
+### Setting Up the Server
 
 To set up the server, follow these steps:
 
@@ -15,11 +15,11 @@ To set up the server, follow these steps:
 5. Populate the database with seed data using `rails db:seed`.
 6. Start the Rails server with the command `rails server`.
 
-=== Environment Variables Configuration
+### Environment Variables Configuration
 
 Before running the application, please make sure to set up the following environment variables:
 
-=== Mailtrap Configuration
+### Mailtrap Configuration
 
 Create an account on Mailtrap for sending emails to administrators. Once you've created your account, ensure to associate the following details with the respective environment variables:
 
@@ -29,7 +29,7 @@ Create an account on Mailtrap for sending emails to administrators. Once you've 
 - `MAILTRAP_USER`: Your Mailtrap account username.
 - `MAILTRAP_PASSWORD`: Your Mailtrap account password.
 
-=== Database Configuration
+### Database Configuration
 
 Configure the database connection by setting the following environment variables:
 
@@ -40,7 +40,7 @@ Configure the database connection by setting the following environment variables
 - `DATABASE_NAME_TEST`: The test database name.
 - `DATABASE_NAME_PRODUCTION`: The production database name.
 
-=== Default Email Address
+### Default Email Address
 
 Set the default email address that will be used as the sender for emails:
 
@@ -51,20 +51,25 @@ You can copy the values from `.env.example` to set up your environment variables
 Remember to keep your environment variables secure and not include them in version control.
 
 
-== Entity-Relationship Diagram (ERD)
-You can find more details about the ERD in the following (https://github.com/valentinopfarherr/ecommerce-rails-3/issues/1) in the repository.
+## Entity-Relationship Diagram (ERD)
 
-== Postman Collection
+![DER](/app/assets/images/DER.png)
+
+You can also find the ERD in the following [issue](https://github.com/valentinopfarherr/ecommerce-rails-3/issues/1) in the repository.
+
+## Postman Collection
+
+[postman_collection](postman/collection.json)
 
 The Postman collection for this project is located in the `postman` folder. You can import this JSON file into your Postman client to test the various project APIs.
 
-== Project OpenAPI Specification
+## Project OpenAPI Specification
 
 The OpenAPI specification for this project is located in the `swagger` folder. You can refer to this file to understand the structure of the APIs and how to interact with them.
 
 Please remember to keep these resources and documentation updated as the project progresses.
 
-== Additional Details
+## Additional Details
 
 - The source code has been organized following best practices in Ruby on Rails development.
 - Advanced model associations have been implemented to meet functional requirements.

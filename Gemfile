@@ -10,6 +10,7 @@ gem 'kaminari'
 gem 'scrypt'
 
 group :development, :test do
+  gem 'bundler-audit', require: false
   gem 'dotenv-rails'
   gem 'rspec-rails'
   gem 'faker', '1.6.6'

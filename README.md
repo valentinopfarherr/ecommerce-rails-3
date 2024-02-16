@@ -9,10 +9,10 @@ This repository contains the solution to the evaluation challenge for the Develo
 To set up the server, follow these steps:
 
 1. Clone this repository to your local machine.
-2. Install project dependencies using Bundler.
-3. Configure the PostgreSQL database and ensure you have Ruby 1.9.3 and Rails 3.
-4. Run `rake db:create` to create the database.
-5. Run database migrations with the command:
+2. Install project dependencies using `bundle install`
+4. Configure the PostgreSQL database and ensure you have Ruby 1.9.3 and Rails 3.
+5. Run `rake db:create` to create the database.
+6. Run database migrations with the command:
 ```bash
 `rake db:migrate`.
 ```

@@ -52,12 +52,17 @@ Remember to keep your environment variables secure and not include them in versi
 
 
 == Entity-Relationship Diagram (ERD)
-
-![DER](https://github.com/valentinopfarherr/ecommerce-rails-3/assets/127141076/2ecaee66-35b4-4389-8c4e-57fb94f5caf4)
+You can find more details about the ERD in the following (https://github.com/valentinopfarherr/ecommerce-rails-3/issues/1) in the repository.
 
 == Postman Collection
 
-- [postman_collection](postman/collection.json)
+The Postman collection for this project is located in the `postman` folder. You can import this JSON file into your Postman client to test the various project APIs.
+
+== Project OpenAPI Specification
+
+The OpenAPI specification for this project is located in the `swagger` folder. You can refer to this file to understand the structure of the APIs and how to interact with them.
+
+Please remember to keep these resources and documentation updated as the project progresses.
 
 == Additional Details
 

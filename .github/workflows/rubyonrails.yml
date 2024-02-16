@@ -13,12 +13,12 @@ jobs:
         ports:
           - "5432:5432"
         env:
-          POSTGRES_DB: rails_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
+          POSTGRES_DB: ecommerce_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      DATABASE_URL: "postgres://postgres:postgres@localhost:5432/ecommerce_test"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,9 +27,12 @@ jobs:
         with:
           bundler-cache: true
       - name: Set up database schema
-        run: rake db:schema:load
+        run: |
+          bundle exec rake db:create
+          bundle exec rake db:migrate
+          bundle exec rake db:schema:load
       - name: Run tests
-        run: rake
+        run: bundle exec rake
 
   lint:
     runs-on: ubuntu-latest

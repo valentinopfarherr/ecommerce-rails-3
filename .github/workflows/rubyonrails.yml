@@ -43,4 +43,4 @@ jobs:
       - name: Install development and test gems
         run: bundle install --with development test
       - name: Lint Ruby files
-        run: bin/rubocop --parallel
+        run: bundle exec rubocop

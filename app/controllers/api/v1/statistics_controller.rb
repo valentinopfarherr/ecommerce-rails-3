@@ -3,7 +3,7 @@ module Api
     # StatisticsController handles statistics for admins.
     class StatisticsController < ApplicationController
       before_filter :authenticate_user!
-      before_filter -> { require_role('admin') }
+      before_filter -> { require_admin_role }
       before_filter :set_params, only: [:purchases_by_params, :purchase_count_by_granularity]
 
       def most_purchased_by_category

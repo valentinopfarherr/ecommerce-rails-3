@@ -1,6 +1,6 @@
 # require 'rails_helper'
 
-# RSpec.describe AuthController, type: :controller do
+# RSpec.describe SessionsController, type: :controller do
 #   let(:admin) { FactoryBot.create(:admin, email: 'test@example.com', password: 'password123') }
 
 #   describe 'POST #login' do

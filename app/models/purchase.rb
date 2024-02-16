@@ -13,6 +13,17 @@ class Purchase < ActiveRecord::Base
     attr_accessible :customer_id
   end
 
+  def as_json(_options = {})
+    {
+      id: id,
+      product: { id: product_id, name: product.name },
+      quantity: quantity,
+      total_price: total_price,
+      customer_id: customer_id,
+      purchase_date: purchase_date
+    }
+  end
+
   private
 
   def calculate_total_price

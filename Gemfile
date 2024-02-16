@@ -7,7 +7,7 @@ gem 'paper_trail'
 gem 'jwt'
 gem 'sidekiq', '~> 1.0'
 gem 'kaminari'
-gem 'devise'
+gem 'scrypt'
 
 group :development, :test do
   gem 'dotenv-rails'

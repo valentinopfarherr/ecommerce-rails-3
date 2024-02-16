@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :admin do
-    sequence(:username) { |n| "admin#{n}" }
     email { Faker::Internet.email }
     password { 'password' }
     role { 'admin' }

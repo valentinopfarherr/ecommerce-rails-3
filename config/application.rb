@@ -22,6 +22,9 @@ module Ecommerce
     config.generators do |g|
       g.test_framework :rspec
     end
+
     config.api_only = true
+
+    config.exceptions_app = self.routes
   end
 end

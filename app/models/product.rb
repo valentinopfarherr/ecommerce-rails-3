@@ -38,6 +38,19 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def as_json(_options = {})
+    {
+      id: id,
+      name: name,
+      description: description,
+      price: price,
+      images: images.map { |image| { url: image.url } },
+      categories: categories.map { |category| { id: category.id, name: category.name } },
+      creator_id: creator_id,
+      first_purchase_email_sent: first_purchase_email_sent
+    }
+  end
+
   private
 
   def reject_images(attributes)

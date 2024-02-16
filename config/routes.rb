@@ -1,8 +1,4 @@
 Ecommerce::Application.routes.draw do
-  devise_for :users
-
-  post '/login', to: 'auth#login'
-
   namespace :api do
     namespace :v1 do
       resources :statistics do
@@ -14,8 +10,6 @@ Ecommerce::Application.routes.draw do
         end
       end
     end
-
-    match '*path', to: 'errors#not_found', via: :all
   end
 
   resources :categories do
@@ -33,6 +27,8 @@ Ecommerce::Application.routes.draw do
   resources :admins
   resources :users
   resources :purchases, except: [:update]
+  resources :sessions, only: [:create]
 
-  match '*path', to: 'errors#not_found', via: :all
+  get "/404" => "errors#not_found"
+  get "/500" => "errors#exception"
 end

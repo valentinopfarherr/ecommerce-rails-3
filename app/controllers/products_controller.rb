@@ -1,17 +1,17 @@
 # ProductsController handles CRUD operations for products.
 class ProductsController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
-  before_filter -> { require_role('admin') }, except: [:index, :show]
+  before_filter -> { require_admin_role }, except: [:index, :show]
   before_filter :set_product, only: [:show, :update, :destroy, :history]
-  before_filter :set_paper_trail_whodunnit
+  before_filter :set_paper_trail_whodunnit, only: [:create, :update]
 
   def index
-    render_product_response(paginate_collection(Product.includes(:images, :categories)))
+    render json: paginate_collection(Product.includes(:images, :categories))
   end
 
   # Shows a specific product.
   def show
-    render_product_response(@product)
+    render json: @product, status: :ok
   end
 
   # Creates a new product.
@@ -19,7 +19,7 @@ class ProductsController < ApplicationController
     @product = Product.new(params[:product])
     @product.creator_id = @current_user.id
     if @product.save
-      render_product_response(@product, :created)
+      render json: @product, status: :created, location: @product
     else
       render_error_response(@product)
     end
@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
   def update
     delete_images_and_categories_if_necessary(@product, params[:product][:images_attributes], params[:product][:product_categories_attributes])
     if @product.update_attributes(params[:product])
-      render_product_response(@product)
+      render json: @product
     else
       render_error_response(@product)
     end
@@ -46,16 +46,16 @@ class ProductsController < ApplicationController
 
   # Show history of a product
   def history
-    @history = @product.versions.reverse_order.map do |version|
-      pruduct_info = version.object.present? ? YAML.load(version.object) : {}
+    versions_info = @product.versions.reverse_order.map do |version|
+      product_info = version.object.present? ? YAML.load(version.object) : {}
       {
+        event: version.event,
         occurred_at: version.created_at,
-        action: version.event,
-        product: pruduct_info,
-        admin_id: version.whodunnit
+        product: product_info,
+        whodunnit: version.whodunnit
       }
     end
-    render json: @history
+    render json: versions_info
   end
 
   private
@@ -64,20 +64,6 @@ class ProductsController < ApplicationController
   def set_product
     @product = Product.find_by_id(params[:id])
     render json: { error: 'product not found' }, status: :not_found unless @product
-  end
-
-  # Renders the product response including images and categories.
-  def render_product_response(product, status = :ok)
-    render json: product.as_json(
-      include: {
-        images: {
-          only: [:id, :url]
-        },
-        categories: {
-          only: [:id, :name]
-        }
-      }
-    ), status: status
   end
 
   def delete_images_and_categories_if_necessary(product, images_params, categories_params)

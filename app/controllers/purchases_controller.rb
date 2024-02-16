@@ -1,7 +1,7 @@
 # PurchasesController handles CRUD operations for products.
 class PurchasesController < ApplicationController
   before_filter :authenticate_user!
-  before_filter -> { require_role('admin') }, except: [:create]
+  before_filter -> { require_admin_role }, except: [:create]
   before_filter :set_purchase, only: [:show, :update, :destroy]
   before_filter :set_product, only: [:create]
 

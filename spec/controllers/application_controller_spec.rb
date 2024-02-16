@@ -1,13 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
-  let(:admin) { FactoryBot.create(:admin) }
-
-  before do
-    allow(controller).to receive(:authenticate_user!).and_return(true)
-    allow(controller).to receive(:current_user).and_return(admin)
-  end
-
   describe '#paginate_collection' do
     let(:collection) { double('Collection') }
 

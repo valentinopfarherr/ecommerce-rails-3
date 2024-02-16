@@ -1,7 +1,6 @@
 # create the first admin if no admins exist
 unless Admin.any?
   admin = Admin.create(
-    username: 'admin',
     email: 'admin@example.com',
     password: 'password',
     role: 'admin'
@@ -11,7 +10,6 @@ end
 # create admins
 5.times do
   Admin.create(
-    username: Faker::Lorem.word,
     email: Faker::Internet.email,
     password: 'password',
     role: 'admin'
@@ -21,7 +19,6 @@ end
 # create buyers
 10.times do
   User.create(
-    username: Faker::Lorem.word,
     email: Faker::Internet.email,
     password: 'password',
     role: 'buyer'

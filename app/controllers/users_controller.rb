@@ -1,7 +1,7 @@
 # UsersController handles CRUD operations for users.
 class UsersController < ApplicationController
   before_filter :authenticate_user!, except: [:create]
-  before_filter -> { require_role('admin') }, except: [:create]
+  before_filter -> { require_admin_role }, except: [:create]
   before_filter :set_user, only: [:show, :update, :destroy]
 
   def index
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @user.role = 'buyer'
 
     if @user.save
-      token = encode_token(user_id: @user.id)
+      token = @user.generate_jwt
       render json: { user: @user, token: token }, status: :created
     else
       render_error_response(@user)

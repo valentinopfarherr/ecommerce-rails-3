@@ -15,23 +15,28 @@ class ApplicationController < ActionController::Base
     render json: { error: model.errors.full_messages.join(', ') }, status: :unprocessable_entity
   end
 
-  def encode_token(payload)
-    payload[:exp] = 2.hours.from_now.to_i
-    JWT.encode(payload, Ecommerce::Application.config.secret_token)
-  end
-
   def authenticate_user!
     token = request.headers['Authorization']
     token = token.split(' ').last if token
-    decoded_token = JWT.decode(token, Ecommerce::Application.config.secret_token)
-    @current_user = User.find(decoded_token.first['user_id'])
+    payload = JWT.decode(token, secret_token).first
+    @current_user = User.find_by_id(payload['user_id'])
   rescue JWT::DecodeError, ActiveRecord::RecordNotFound
     render json: { error: 'invalid token' }, status: :unauthorized
   end
 
-  def require_role(role)
-    unless @current_user.role == role
+  private
+
+  def require_admin_role
+    unless @current_user.admin? == true
       render json: { error: 'unauthorized' }, status: :unauthorized
     end
+  end
+
+  def secret_token
+    Ecommerce::Application.config.secret_token
+  end
+
+  def set_paper_trail_whodunnit
+    PaperTrail.whodunnit = @current_user.id.to_s if @current_user
   end
 end

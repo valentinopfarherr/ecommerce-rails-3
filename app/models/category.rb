@@ -13,4 +13,12 @@ class Category < ActiveRecord::Base
   def self.seed_attributes
     attr_accessible :creator_id
   end
+
+  def as_json(_options = {})
+    {
+      id: id,
+      name: name,
+      creator_id: creator_id
+    }
+  end
 end

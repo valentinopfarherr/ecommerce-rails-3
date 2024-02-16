@@ -1,7 +1,7 @@
 # AdminsController handles CRUD operations for admins.
 class AdminsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter -> { require_role('admin') }
+  before_filter -> { require_admin_role }
   before_filter :set_admin, only: [:show, :update, :destroy]
 
   def index
@@ -20,7 +20,7 @@ class AdminsController < ApplicationController
     @admin.role = 'admin'
 
     if @admin.save
-      token = encode_token(user_id: @admin.id)
+      token = @admin.generate_jwt
       render json: { admin: @admin, token: token }, status: :created
     else
       render_error_response(@admin)
@@ -32,7 +32,7 @@ class AdminsController < ApplicationController
     if @admin.update_attributes(params[:admin])
       render json: @admin
     else
-      rrender_error_response(@admin)
+      render_error_response(@admin)
     end
   end
 

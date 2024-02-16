@@ -1,9 +1,9 @@
 # CategoriesController handles CRUD operations for categories.
 class CategoriesController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
-  before_filter -> { require_role('admin') }, except: [:index, :show]
+  before_filter -> { require_admin_role }, except: [:index, :show]
   before_filter :set_category, only: [:show, :update, :destroy, :history]
-  before_filter :set_paper_trail_whodunnit
+  before_filter :set_paper_trail_whodunnit, only: [:create, :update]
 
   def index
     render json: paginate_collection(Category)
@@ -46,16 +46,16 @@ class CategoriesController < ApplicationController
 
   # Show history of a category
   def history
-    @history = @category.versions.reverse_order.map do |version|
-      category_info = version.object.present? ? YAML.load(version.object) : @category
+    versions_info = @category.versions.reverse_order.map do |version|
+      category_info = version.object.present? ? YAML.load(version.object) : {}
       {
+        event: version.event,
         occurred_at: version.created_at,
-        action: version.event,
         category: category_info,
-        admin_id: version.whodunnit
+        whodunnit: version.whodunnit
       }
     end
-    render json: @history
+    render json: versions_info
   end
 
   private

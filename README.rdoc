@@ -15,11 +15,11 @@ To set up the server, follow these steps:
 5. Populate the database with seed data using `rails db:seed`.
 6. Start the Rails server with the command `rails server`.
 
-# Environment Variables Configuration
+=== Environment Variables Configuration
 
 Before running the application, please make sure to set up the following environment variables:
 
-## Mailtrap Configuration
+=== Mailtrap Configuration
 
 Create an account on Mailtrap for sending emails to administrators. Once you've created your account, ensure to associate the following details with the respective environment variables:
 
@@ -29,7 +29,7 @@ Create an account on Mailtrap for sending emails to administrators. Once you've 
 - `MAILTRAP_USER`: Your Mailtrap account username.
 - `MAILTRAP_PASSWORD`: Your Mailtrap account password.
 
-## Database Configuration
+=== Database Configuration
 
 Configure the database connection by setting the following environment variables:
 
@@ -40,7 +40,7 @@ Configure the database connection by setting the following environment variables
 - `DATABASE_NAME_TEST`: The test database name.
 - `DATABASE_NAME_PRODUCTION`: The production database name.
 
-## Default Email Address
+=== Default Email Address
 
 Set the default email address that will be used as the sender for emails:
 

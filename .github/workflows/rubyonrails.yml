@@ -27,9 +27,9 @@ jobs:
         with:
           bundler-cache: true
       - name: Set up database schema
-        run: bin/rake db:schema:load
+        run: rake db:schema:load
       - name: Run tests
-        run: bin/rake
+        run: rake
 
   lint:
     runs-on: ubuntu-latest

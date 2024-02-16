@@ -54,8 +54,8 @@ module Api
 
       def extract_options
         {
-          start_date: params[:start_date],
-          end_date: params[:end_date],
+          start_date: format_date(params[:start_date]),
+          end_date: format_date(params[:end_date]),
           category_id: params[:category_id],
           user_id: params[:user_id],
           admin_id: params[:admin_id]
@@ -78,6 +78,12 @@ module Api
         Rails.cache.fetch('top_revenue_by_category', expires_in: 1.hour) do
           StatisticsService.top_revenue_by_category
         end
+      end
+
+      def format_date(date_string)
+        return nil if date_string.blank?
+      
+        Date.parse(date_string).to_formatted_s(:db)
       end
     end
   end

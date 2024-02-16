@@ -25,6 +25,6 @@ module Ecommerce
 
     config.api_only = true
 
-    config.exceptions_app = self.routes
+    config.exceptions_app = routes
   end
 end

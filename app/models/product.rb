@@ -43,7 +43,7 @@ class Product < ActiveRecord::Base
       id: id,
       name: name,
       description: description,
-      price: price,
+      price: price.round(2),
       images: images.map { |image| { url: image.url } },
       categories: categories.map { |category| { id: category.id, name: category.name } },
       creator_id: creator_id,

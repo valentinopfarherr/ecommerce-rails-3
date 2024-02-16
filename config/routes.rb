@@ -28,7 +28,4 @@ Ecommerce::Application.routes.draw do
   resources :users
   resources :purchases, except: [:update]
   resources :sessions, only: [:create]
-
-  get "/404" => "errors#not_found"
-  get "/500" => "errors#exception"
 end

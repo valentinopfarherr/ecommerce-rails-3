@@ -3,6 +3,9 @@
 # ApplicationController is the main controller of the application
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  before_filter :set_paper_trail_whodunnit
+
+  attr_accessor :current_user
 
   protected
 
@@ -15,16 +18,17 @@ class ApplicationController < ActionController::Base
     render json: { error: model.errors.full_messages.join(', ') }, status: :unprocessable_entity
   end
 
+  private
+
   def authenticate_user!
     token = request.headers['Authorization']
     token = token.split(' ').last if token
     payload = JWT.decode(token, secret_token).first
     @current_user = User.find_by_id(payload['user_id'])
-  rescue JWT::DecodeError, ActiveRecord::RecordNotFound
+  rescue JWT::DecodeError, ActiveRecord::RecordNotFound => e
+    Rails.logger.error "Error durante la autenticación del usuario: #{e.message}"
     render json: { error: 'invalid token' }, status: :unauthorized
   end
-
-  private
 
   def require_admin_role
     unless @current_user.admin? == true
@@ -34,9 +38,5 @@ class ApplicationController < ActionController::Base
 
   def secret_token
     Ecommerce::Application.config.secret_token
-  end
-
-  def set_paper_trail_whodunnit
-    PaperTrail.whodunnit = @current_user.id.to_s if @current_user
   end
 end

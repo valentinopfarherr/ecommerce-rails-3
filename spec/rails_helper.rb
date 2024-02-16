@@ -1,6 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
-require 'support/jwt_helper'
+require 'support/jwt_helpers'
 
 ENV['RAILS_ENV'] ||= 'test'
 
@@ -35,7 +35,11 @@ RSpec.configure do |config|
 
   config.filter_rails_from_backtrace!
 
-  config.include JwtHelper
+  config.include JwtHelpers, type: :request
 
   config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    Ecommerce::Application.config.secret_token = ENV['SECRET_KEY_BASE']
+  end
 end

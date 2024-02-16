@@ -29,12 +29,12 @@ class DailyReportWorker
   def generate_purchases_summary(report_data)
     summary = ''
     report_data.each do |purchase|
+      summary += "------------------------------\n"
       summary += "Purchase ID: #{purchase[:id]}\n"
       summary += "Customer ID: #{purchase[:customer_id]}\n"
       summary += "Product ID: #{purchase[:product_id]}\n"
       summary += "Quantity: #{purchase[:quantity]}\n"
       summary += "Total Price: #{purchase[:total_price]}\n"
-      summary += "------------------------------\n"
     end
     summary
   end

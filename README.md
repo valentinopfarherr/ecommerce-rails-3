@@ -91,6 +91,8 @@ The Postman collection for this project is located in the `postman` folder. You 
 
 ## Project OpenAPI Specification
 
+[open_api](swagger/openapi.yaml)
+
 The OpenAPI specification for this project is located in the `swagger` folder. You can refer to this file to understand the structure of the APIs and how to interact with them.
 
 Please remember to keep these resources and documentation updated as the project progresses.

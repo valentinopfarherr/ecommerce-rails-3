@@ -28,7 +28,6 @@ jobs:
           bundler-cache: true
       - name: Set up database schema
         run: |
-          bundle exec rake db:create
           bundle exec rake db:migrate
           bundle exec rake db:schema:load
       - name: Run tests

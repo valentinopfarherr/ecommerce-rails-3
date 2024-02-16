@@ -79,7 +79,7 @@ rspec
 
 ## Entity-Relationship Diagram (ERD)
 
-![DER](/app/assets/images/DER.png)
+![DER](https://github.com/valentinopfarherr/ecommerce-rails-3/assets/127141076/2ecaee66-35b4-4389-8c4e-57fb94f5caf4)
 
 You can also find the ERD in the following [issue](https://github.com/valentinopfarherr/ecommerce-rails-3/issues/1) in the repository.
 

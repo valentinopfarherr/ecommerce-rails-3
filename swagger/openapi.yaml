@@ -1,0 +1,603 @@
+openapi: 3.0.0
+info:
+  title: Ecommerce API
+  version: 1.0.0
+  description: API for managing an ecommerce platform
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /sessions:
+    post:
+      tags:
+        - sessions
+      summary: Log in
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: admin@example.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: Successful login
+  /admins:
+    get:
+      tags:
+        - admins
+      summary: Get all admins
+      responses:
+        '200':
+          description: List of admins retrieved successfully
+    post:
+      tags:
+        - admins
+      summary: Create admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: newadmin@gmail.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: Admin created successfully
+  /admin/{id}:
+    put:
+      tags:
+        - admins
+      summary: Update admin
+      parameters:
+        - name: id
+          in: path
+          description: ID of the admin to update
+          required: true
+          schema:
+            type: integer
+            example: 2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: adminupdated@gmail.com
+                password:
+                  type: string
+                  example: newpassword
+      responses:
+        '200':
+          description: Admin updated successfully
+    delete:
+      tags:
+        - admins
+      summary: Delete admin
+      parameters:
+        - name: id
+          in: path
+          description: ID of the admin to delete
+          required: true
+          schema:
+            type: integer
+            example: 18
+      responses:
+        '200':
+          description: Admin deleted successfully
+    get:
+      tags:
+        - admins
+      summary: Get admin by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the admin to retrieve
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Admin retrieved successfully
+  /users:
+    get:
+      tags:
+        - users
+      summary: Get all users
+      responses:
+        '200':
+          description: List of users retrieved successfully
+    post:
+      tags:
+        - users
+      summary: Create user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: demobuyer2@gmail.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: User created successfully
+  /users/{id}:  
+    put:
+      tags:
+        - users
+      summary: Update user
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to update
+          required: true
+          schema:
+            type: integer
+            example: 10
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: demobuyerupdated@gmail.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: User updated successfully
+    delete:
+      tags:
+        - users
+      summary: Delete user
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to delete
+          required: true
+          schema:
+            type: integer
+            example: 19
+      responses:
+        '200':
+          description: User deleted successfully
+    get:
+      tags:
+        - users
+      summary: Get user by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to retrieve
+          required: true
+          schema:
+            type: integer
+            example: 7
+      responses:
+        '200':
+          description: User retrieved successfully
+  /categories:
+    get:
+      tags:
+        - categories
+      summary: Get all categories
+      responses:
+        '200':
+          description: List of categories retrieved successfully
+    post:
+      tags:
+        - categories
+      summary: Create category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: New category
+      responses:
+        '200':
+          description: Category created successfully
+  /categories/{id}:
+    put:
+      tags:
+        - categories
+      summary: Update category
+      parameters:
+        - name: id
+          in: path
+          description: ID of the category to update
+          required: true
+          schema:
+            type: integer
+            example: 6
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: New name
+      responses:
+        '200':
+          description: Category updated successfully
+    delete:
+      tags:
+        - categories
+      summary: Delete category
+      parameters:
+        - name: id
+          in: path
+          description: ID of the category to delete
+          required: true
+          schema:
+            type: integer
+            example: 6
+      responses:
+        '200':
+          description: Category deleted successfully
+    get:
+      tags:
+        - categories
+      summary: Get category by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the category to retrieve
+          required: true
+          schema:
+            type: integer
+            example: 7
+      responses:
+        '200':
+          description: Category retrieved successfully
+  /categories/{id}/history:
+    get:
+      tags:
+        - products
+      summary: Get category history by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the category to retrieve
+          required: true
+          schema:
+            type: integer
+            example: 6
+      responses:
+        '200':
+          description: Category history retrieved successfully
+  /products:
+    get:
+      tags:
+        - products
+      summary: Get all products
+      responses:
+        '200':
+          description: List of products retrieved successfully
+    post:
+      tags:
+        - products
+      summary: Create product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: New Product
+                description:
+                  type: string
+                  example: Its a demo
+                price:
+                  type: number
+                  example: 1000
+                images_attributes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        example: https://demo-image.jpg
+                product_categories_attributes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      category_id:
+                        type: integer
+                        example: 1
+      responses:
+        '200':
+          description: Product created successfully
+  /products/{id}:
+    put:
+      tags:
+        - products
+      summary: Update product
+      parameters:
+        - name: id
+          in: path
+          description: ID of the product to update
+          required: true
+          schema:
+            type: integer
+            example: 9
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: New Name
+                images_attributes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        example: https://url-de-imagen-a.jpg
+                product_categories_attributes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      category_id:
+                        type: integer
+                        example: 1
+      responses:
+        '200':
+          description: Product updated successfully
+    delete:
+      tags:
+        - products
+      summary: Delete product
+      parameters:
+        - name: id
+          in: path
+          description: ID of the product to delete
+          required: true
+          schema:
+            type: integer
+            example: 11
+      responses:
+        '200':
+          description: Product deleted successfully
+    get:
+      tags:
+        - products
+      summary: Get product by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the product to retrieve
+          required: true
+          schema:
+            type: integer
+            example: 6
+      responses:
+        '200':
+          description: Product retrieved successfully
+  /products/{id}/history:
+    get:
+      tags:
+        - products
+      summary: Get product history by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the product to retrieve
+          required: true
+          schema:
+            type: integer
+            example: 6
+      responses:
+        '200':
+          description: Product history retrieved successfully
+  /purchases:
+      get:
+        tags:
+          - purchases
+        summary: Get all purchases
+        responses:
+          '200':
+            description: List of purchases retrieved successfully  
+      post:
+        tags:
+          - purchases
+        summary: Create purchase
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product_id:
+                    type: integer
+                    example: 1
+                  quantity:
+                    type: integer
+                    example: 10
+        responses:
+          '200':
+            description: Purchase created successfully
+  /purchases/{id}:
+      delete:
+        tags:
+          - purchases
+        summary: Delete purchase
+        parameters:
+          - name: id
+            in: path
+            description: ID of the purchase to delete
+            required: true
+            schema:
+              type: integer
+              example: 22
+        responses:
+          '200':
+            description: Purchase deleted successfully
+      get:
+        tags:
+          - purchases
+        summary: Get purchase by ID
+        parameters:
+          - name: id
+            in: path
+            description: ID of the purchase to retrieve
+            required: true
+            schema:
+              type: integer
+              example: 1
+        responses:
+          '200':
+            description: Purchase retrieved successfully
+  /statistics/most_purchased_by_category:
+    get:
+      tags:
+        - statistics
+      summary: Most purchased by category
+      responses:
+        '200':
+          description: Successful response
+
+  /statistics/top_revenue_by_category:
+    get:
+      tags:
+        - statistics
+      summary: Top revenue by category
+      responses:
+        '200':
+          description: Successful response
+
+  /statistics/purchases:
+    get:
+      tags:
+        - statistics
+      summary: Purchases by parameters
+      parameters:
+        - name: admin_id
+          in: query
+          description: ID of the admin
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: user_id
+          in: query
+          description: ID of the user
+          schema:
+            type: integer
+            example: 7
+        - name: category_id
+          in: query
+          description: ID of the category
+          schema:
+            type: integer
+            example: 1
+        - name: start_date
+          in: query
+          description: Start date
+          schema:
+            type: string
+            format: date
+            example: '2023-02-25'
+        - name: end_date
+          in: query
+          description: End date
+          schema:
+            type: string
+            format: date
+            example: '2024-02-01'
+      responses:
+        '200':
+          description: Successful response
+
+  /statistics/purchases_by_granularity:
+    get:
+      tags:
+        - statistics
+      summary: Purchases by granularity
+      parameters:
+        - name: granularity
+          in: query
+          description: Granularity
+          required: true
+          schema:
+            type: string
+            example: 'hour'
+        - name: admin_id
+          in: query
+          description: ID of the admin
+          schema:
+            type: integer
+            example: 6
+        - name: user_id
+          in: query
+          description: ID of the user
+          schema:
+            type: integer
+            example: 6
+        - name: category_id
+          in: query
+          description: ID of the category
+          schema:
+            type: integer
+            example: 1
+        - name: start_date
+          in: query
+          description: Start date
+          schema:
+            type: string
+            format: date
+            example: '2023-02-25'
+        - name: end_date
+          in: query
+          description: End date
+          schema:
+            type: string
+            format: date
+            example: '2024-02-01'
+      responses:
+        '200':
+          description: Successful response

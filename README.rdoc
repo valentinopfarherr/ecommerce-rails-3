@@ -15,6 +15,42 @@ To set up the server, follow these steps:
 5. Populate the database with seed data using `rails db:seed`.
 6. Start the Rails server with the command `rails server`.
 
+# Environment Variables Configuration
+
+Before running the application, please make sure to set up the following environment variables:
+
+## Mailtrap Configuration
+
+Create an account on Mailtrap for sending emails to administrators. Once you've created your account, ensure to associate the following details with the respective environment variables:
+
+- `MAILTRAP_ADDRESS`: The SMTP address provided by Mailtrap.
+- `MAILTRAP_PORT`: The SMTP port provided by Mailtrap (usually 2525).
+- `MAILTRAP_DOMAIN`: Your Mailtrap domain.
+- `MAILTRAP_USER`: Your Mailtrap account username.
+- `MAILTRAP_PASSWORD`: Your Mailtrap account password.
+
+## Database Configuration
+
+Configure the database connection by setting the following environment variables:
+
+- `DATABASE_HOST`: The database host address (usually `localhost`).
+- `DATABASE_USERNAME`: The database username.
+- `DATABASE_PASSWORD`: The database password.
+- `DATABASE_NAME_DEVELOPMENT`: The development database name.
+- `DATABASE_NAME_TEST`: The test database name.
+- `DATABASE_NAME_PRODUCTION`: The production database name.
+
+## Default Email Address
+
+Set the default email address that will be used as the sender for emails:
+
+- `DEFAULT_EMAIL_FROM`: The default email address (e.g., `noreply@example.com`).
+
+You can copy the values from `.env.example` to set up your environment variables.
+
+Remember to keep your environment variables secure and not include them in version control.
+
+
 == Entity-Relationship Diagram (ERD)
 
 ![DER](app/assets/images/DER.png)

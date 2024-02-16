@@ -11,9 +11,10 @@ To set up the server, follow these steps:
 1. Clone this repository to your local machine.
 2. Install project dependencies using Bundler.
 3. Configure the PostgreSQL database and ensure you have Ruby 1.9.3 and Rails 3.
-4. Run database migrations with the command `rails db:migrate`.
-5. Populate the database with seed data using `rails db:seed`.
-6. Start the Rails server with the command `rails server`.
+4. Run `rake db:create` to create the database.
+5. Run database migrations with the command `rake db:migrate`.
+6. Populate the database with seed data using `rake db:seed`.
+7. Start the Rails server with the command `rails server`.
 
 ### Environment Variables Configuration
 
@@ -50,6 +51,14 @@ You can copy the values from `.env.example` to set up your environment variables
 
 Remember to keep your environment variables secure and not include them in version control.
 
+## Additional Setup for Daily Purchase Reporting
+
+To enable the daily purchase reporting process, follow these additional steps:
+
+1. Ensure you have Sidekiq set up in your local environment.
+2. Start Sidekiq by running `bundle exec sidekiq` in your terminal.
+3. Open another terminal tab and run `rails console`.
+4. Inside the Rails console, run the command `DailyReportWorker.perform_async` to start the daily reporting process.
 
 ## Entity-Relationship Diagram (ERD)
 

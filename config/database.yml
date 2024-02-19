@@ -1,19 +1,19 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: <%= ENV["DATABASE_USERNAME"] %>
+  username: postgres
   password: <%= ENV["DATABASE_PASSWORD"] %>
   host: <%= ENV["DATABASE_HOST"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: <%= ENV["DATABASE_NAME_DEVELOPMENT"] %>
+  database: ecommerce_development
 
 test:
   <<: *default
-  database: <%= ENV["DATABASE_NAME_TEST"] %>
+  database: ecommerce_test
 
 production:
   <<: *default
-  database: <%= ENV["DATABASE_NAME_PRODUCTION"] %>
+  database: ecommerce_production

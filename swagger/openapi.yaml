@@ -3,8 +3,6 @@ info:
   title: Ecommerce API
   version: 1.0.0
   description: API for managing an ecommerce platform
-servers:
-  - url: https://api.example.com/v1
 paths:
   /sessions:
     post:

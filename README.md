@@ -16,11 +16,16 @@ To set up the server, follow these steps:
 ```bash
 `rake db:migrate`.
 ```
-6. Populate the database with seed data using:
+7. Populate the database with seed data using:
 ```bash
 `rake db:seed`.
 ```
-8. Start the Rails server with the command:
+8. After running the seeds, you can use the following credentials to access the admin user:
+
+- Email: admin@example.com
+- Password: password
+
+9. Start the Rails server with the command:
 ```bash
 `rails server`.
 ```

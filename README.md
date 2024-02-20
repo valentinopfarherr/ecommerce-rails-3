@@ -49,11 +49,7 @@ Create an account on Mailtrap for sending emails to administrators. Once you've 
 Configure the database connection by setting the following environment variables:
 
 - `DATABASE_HOST`: The database host address (usually `localhost`).
-- `DATABASE_USERNAME`: The database username.
 - `DATABASE_PASSWORD`: The database password.
-- `DATABASE_NAME_DEVELOPMENT`: The development database name.
-- `DATABASE_NAME_TEST`: The test database name.
-- `DATABASE_NAME_PRODUCTION`: The production database name.
 
 ### Default Email Address
 

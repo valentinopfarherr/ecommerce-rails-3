@@ -14,25 +14,20 @@ To set up the server, follow these steps:
 5. Run `rake db:create` to create the database.
 6. Run database migrations with the command:
 ```bash
-`rake db:migrate`.
+rake db:migrate RAILS_ENV=test && rake db:migrate
 ```
-7. Run database migrations for test environment with the command:
+7. Populate the database with seed data using:
 ```bash
-`rake db:migrate RAILS_ENV=test`.
+rake db:seed
 ```
-
-8. Populate the database with seed data using:
-```bash
-`rake db:seed`.
-```
-9. After running the seeds, you can use the following credentials to access the admin user:
+8. After running the seeds, you can use the following credentials to access the admin user:
 
 - Email: admin@example.com
 - Password: password
 
-10. Start the Rails server with the command:
+9. Start the Rails server with the command:
 ```bash
-`rails server`.
+rails server
 ```
 
 ## Environment Variables Configuration

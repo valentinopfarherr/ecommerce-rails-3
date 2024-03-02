@@ -16,16 +16,21 @@ To set up the server, follow these steps:
 ```bash
 `rake db:migrate`.
 ```
-7. Populate the database with seed data using:
+7. Run database migrations for test environment with the command:
+```bash
+`rake db:migrate RAILS_ENV=test`.
+```
+
+8. Populate the database with seed data using:
 ```bash
 `rake db:seed`.
 ```
-8. After running the seeds, you can use the following credentials to access the admin user:
+9. After running the seeds, you can use the following credentials to access the admin user:
 
 - Email: admin@example.com
 - Password: password
 
-9. Start the Rails server with the command:
+10. Start the Rails server with the command:
 ```bash
 `rails server`.
 ```
@@ -48,8 +53,9 @@ Create an account on Mailtrap for sending emails to administrators. Once you've 
 
 Configure the database connection by setting the following environment variables:
 
-- `DATABASE_HOST`: The database host address (usually `localhost`).
-- `DATABASE_PASSWORD`: The database password.
+- `LOCAL_DATABASE_HOST`: The local database host address (usually `localhost`).
+- `LOCAL_DATABASE_USERNAME`: The local database user.
+- `LOCAL_DATABASE_PASSWORD`: The local database password.
 
 ### Default Email Address
 
@@ -90,13 +96,13 @@ You can also find the ERD in the following [issue](https://github.com/valentinop
 
 The Postman collection for this project is located in the `postman` folder. You can import this JSON file into your Postman client to test the various project APIs.
 
-## Project OpenAPI Specification
+You also check the online collection:
 
-[open_api](swagger/openapi.yaml)
+[postman](https://www.postman.com/valentinopfarherr/workspace/ruby-challenge)
 
-The OpenAPI specification for this project is located in the `swagger` folder. You can refer to this file to understand the structure of the APIs and how to interact with them.
+## Project Swagger Doc
 
-Please remember to keep these resources and documentation updated as the project progresses.
+[swagger](https://app.swaggerhub.com/apis/VALENTINOPFARHERR/ecommerce-api/1.0.0)
 
 ## Additional Details
 

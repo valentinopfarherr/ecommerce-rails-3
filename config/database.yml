@@ -1,19 +1,27 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: postgres
-  password: <%= ENV["DATABASE_PASSWORD"] %>
-  host: <%= ENV["DATABASE_HOST"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
   database: ecommerce_development
+  username: <%= ENV["LOCAL_DATABASE_USERNAME"] %>
+  password: <%= ENV["LOCAL_DATABASE_PASSWORD"] %>
+  host: <%= ENV["LOCAL_DATABASE_HOST"] %>
 
 test:
   <<: *default
   database: ecommerce_test
+  username: <%= ENV["LOCAL_DATABASE_USERNAME"] %>
+  password: <%= ENV["LOCAL_DATABASE_PASSWORD"] %>
+  host: <%= ENV["LOCAL_DATABASE_HOST"] %>
 
 production:
   <<: *default
   database: ecommerce_production
+  host: <%= ENV["PGHOST"] %>
+  database: <%= ENV["PGDATABASE"] %>
+  username: <%= ENV["PGUSER"] %>
+  password: <%= ENV["PGPASSWORD"] %>
+  port: <%= ENV["PGPORT"] %>

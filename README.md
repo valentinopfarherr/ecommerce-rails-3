@@ -95,9 +95,11 @@ You also check the online collection:
 
 [postman](https://www.postman.com/valentinopfarherr/workspace/ruby-challenge)
 
-## Project Swagger Doc
+## Project Swagger Documentation
 
-[swagger](https://app.swaggerhub.com/apis/VALENTINOPFARHERR/ecommerce-api/1.0.0)
+The documentation outlines the endpoints, request parameters, responses, and authentication mechanisms utilized within the API.
+
+For detailed API documentation, please refer to the [Swagger Documentation](https://app.swaggerhub.com/apis/VALENTINOPFARHERR/ecommerce-api/1.0.0)
 
 ## Additional Details
 
